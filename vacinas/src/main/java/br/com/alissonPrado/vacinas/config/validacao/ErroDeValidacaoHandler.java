@@ -20,7 +20,7 @@ public class ErroDeValidacaoHandler {
 
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
-	@ResponseBody
+	//@ResponseBody
 	public String handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
 
 		return "Campo: " + ex.getBindingResult().getFieldError().getField() + " - Descrição erro: "
@@ -30,7 +30,7 @@ public class ErroDeValidacaoHandler {
 	@ExceptionHandler(InvalidFormatException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ResponseBody
-	public String invalidFormatException(InvalidFormatException ex) {
+	public String handleInvalidFormatException(InvalidFormatException ex) {
 
 		return "Dados enviados em formato incorreto. " + ex.getLocalizedMessage();
 	}
