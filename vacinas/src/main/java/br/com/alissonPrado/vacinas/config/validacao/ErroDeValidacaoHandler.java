@@ -1,4 +1,4 @@
-package br.com.alissonPrado.vacinas.controller.advice;
+package br.com.alissonPrado.vacinas.config.validacao;
 
 /*
  @ControllerAdvice is a specialization of the @Component annotation which allows to handle exceptions 
@@ -8,15 +8,15 @@ package br.com.alissonPrado.vacinas.controller.advice;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 
-@ControllerAdvice
-public class ControlAdvice {
+@RestControllerAdvice
+public class ErroDeValidacaoHandler {
 
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
