@@ -41,7 +41,7 @@ public class ErroDeValidacaoHandler {
 			}
 		}
 
-		String mensagemErro = "O campo forncecido " + nomeCampo + " valor '" + ex.getValue().toString()
+		String mensagemErro = "O campo fornecido " + nomeCampo + " valor '" + ex.getValue().toString()
 				+ "' não é do tipo requerido " + ex.getTargetType();
 
 		return mensagemErro;
