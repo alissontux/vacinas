@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 
 @RestControllerAdvice
@@ -20,7 +21,7 @@ public class ErroDeValidacaoHandler {
 
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
-	//@ResponseBody
+	// @ResponseBody
 	public String handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
 
 		return "Campo: " + ex.getBindingResult().getFieldError().getField() + " - Descrição erro: "
@@ -29,9 +30,20 @@ public class ErroDeValidacaoHandler {
 
 	@ExceptionHandler(InvalidFormatException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
-	@ResponseBody
 	public String handleInvalidFormatException(InvalidFormatException ex) {
 
-		return "Dados enviados em formato incorreto. " + ex.getLocalizedMessage();
+		String nomeCampo = "campo";
+
+		if (ex.getPath() != null && !ex.getPath().isEmpty()) {
+			JsonMappingException.Reference path = ex.getPath().get(ex.getPath().size() - 1);
+			if (path != null) {
+				nomeCampo = path.getFieldName();
+			}
+		}
+
+		String mensagemErro = "O campo forncecido " + nomeCampo + " valor '" + ex.getValue().toString()
+				+ "' não é do tipo requerido " + ex.getTargetType();
+
+		return mensagemErro;
 	}
 }
